@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { fetchRandomNumber} from './counterSlice';
 import {
   decrement,
   increment,
@@ -48,12 +49,11 @@ export function Counter() {
         >
           Add Amount
         </button>
-        <button
-          className={styles.asyncButton}
-          onClick={() => dispatch(incrementAsync(Number(incrementAmount) || 0))}
-        >
-          Add Async
+        <button className={styles.button}
+        onClick={()=> dispatch(fetchRandomNumber())} >
+        Fetch From Server
         </button>
+
       </div>
     </div>
   );

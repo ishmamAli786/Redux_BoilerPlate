@@ -1,9 +1,19 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk,createSlice } from '@reduxjs/toolkit';
+
+
+export const fetchRandomNumber = createAsyncThunk(
+  'number/fetchRandomNumber',
+  async (data, thunkAPI)=>{
+    const response = await fetch('/api/randomnumber');
+    return await response.json();
+  }
+)
 
 export const counterSlice = createSlice({
   name: 'counter',
   initialState: {
     value: 0,
+    isLoading: false
   },
   reducers: {
     increment: state => {
@@ -20,6 +30,21 @@ export const counterSlice = createSlice({
       state.value += action.payload;
     },
   },
+  extraReducers:{
+    [fetchRandomNumber.fulfilled]: (state,action) =>{
+      console.log(state,action)
+      state.isLoading = false;
+      state.value +=10;
+    },
+    [fetchRandomNumber.rejected]: (state, action) => {
+      console.log('api call rejected');
+      state.isLoading = false;
+    },
+    [fetchRandomNumber.pending]: (state, action) => {
+      console.log(state, action)
+      state.isLoading=true;
+    },
+  }
 });
 
 export const { increment, decrement, incrementByAmount } = counterSlice.actions;

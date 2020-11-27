@@ -1,7 +1,9 @@
 import React from 'react';
-import logo from './logo.svg';
 import { Counter } from './features/counter/Counter';
+import {makeServer} from './server';
 import './App.css';
+
+makeServer({environment: 'development'});
 
 function App() {
   return (
